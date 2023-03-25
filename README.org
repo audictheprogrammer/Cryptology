@@ -1,0 +1,38 @@
+#+TITLE:    Cryptology
+#+AUTHOR:   Audictheprogrammer
+#+DATE:     <2023-03-25>
+#+LANGUAGE: en
+
+* About the project
+- LU3IN024 Cryptology Assignment.
+- In this repository, we will only consider upper-case letter as alphabet.
+- Language: Python3
+
+** TME1: Monoalphabetic Cipher (Caesar)
+Some frequency treatment such as french alphabet and implementing Caesar Cipher.
+=Usage: python3 cesar.py <A-Z> <c, d> <Ciphertext>=
+
+
+** TME2: Cryptanalysis of Polyalphabetic Cipher (Vigenere)
+Implementing Vigenere Cipher and 3 versions of Vigenere Cryptanalysis.
+The 3 versions use the same technique to get key length.
+Split the ciphertext in k columns, then compute the average index of coincidence IC(k).
+Pick the first k where, IC(k) > 0.6. We could also pick the best k, ie. IC(k) = max_n (IC(n)).
+
+* Vigenere Cryptanalysis V1* : Index of coincidence
+Perf: 18 texts succesfully unciphered out of 100.
+Find the most frequent letter of each column, consider it as an "e" letter, gets the Key, and apply Vigenere decryption.
+
+* Vigenere Cryptanalysis V2* : Mutual index of coincidence
+Perf: 45 texts succesfully unciphered out of 100.
+Detail:
+Split the ciphertext in k columns, take the first column c_1 as reference.
+Forall i from 2 to k, Forall d from 2 to 25,
+Compute MIC(c_1, c_i, d) where we shift the c_i with d_i, then pick the best d_i, ie. MIC(c_1, c_i, d_i) = max_n MIC(c_1, c_i, n_i)
+Now, we have (d_i), we shift all c_i with d_i. All columns are encrypted with the say of c_1, we simply finish with a Caesar decryption/ Vigenere decryption with a key of length 1.
+
+* Vigenere Cryptanalysis V3* : Pearson correlation coefficient
+Perf: 94 texts succesfully unciphered out of 100.
+Same method as V2, except mutual index of coin where we /use Pearson correlation coefficient.
+
+=Usage: python3 cryptanalyse_vigenere.py -v <1,2,3> -f <Filename>=

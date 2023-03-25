@@ -1,0 +1,31 @@
+image: python:latest
+
+stages:
+- test
+
+1-Cesar:
+  script: python3 test-1-cesar.py
+
+2-VigenereCipher:
+  script: python3 test-2-vigenere-cipher.py
+
+3-Freq-IC:
+  script: python3 test-3-freq-IC.py
+
+4-Decalages:
+  script: python3 test-4-decalages.py
+
+5-CryptanalyseV1:
+  script: python3 test-5-cryptanalyse-V1.py
+
+6-ICM-decalages:
+  script: python3 test-6-ICM-decalages.py
+
+7-CryptanalyseV2:
+  script: python3 test-7-cryptanalyse-V2.py
+
+8-Correlations:
+  script: python3 test-8-correlations.py
+
+9-CryptanalyseV3:
+  script: python3 test-9-cryptanalyse-V3.py

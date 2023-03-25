@@ -1,0 +1,13 @@
+image: python:latest
+
+stages:
+- test
+
+1-Exercice1:
+  script: python3 test-1-ex1-mono.py
+
+2-Exercice2:
+  script: python3 test-2-ex2-mono.py
+
+3-Exercice3:
+  script: python3 test-3-ex3-mono.py

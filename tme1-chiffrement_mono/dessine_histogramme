@@ -1,0 +1,53 @@
+#! /bin/bash
+
+N=$#
+eval FILE=\${$N}
+OUTPUT='set term png; set output "|display png:-"'
+usage=`mktemp`
+cat > $usage <<EOF 
+Usage: 
+    ./dessine_histogramme [-h] [-pdf] <calcul_de_frequences> <fichier_à_analyser>    
+    Exemples: 
+      ./dessine_histogramme ./frequence germinal_nettoye
+         ouvre une fenêtre où l'histogramme est visualisé
+      ./dessine_histogramme -pdf python3 frequence.py germinal_nettoye
+         crée un <fichier_à_analyser>.pdf de l'histogramme
+
+ou  
+    <calcul_de_frequences> | ./dessine_histogramme [-h] [-pdf] 
+    Exemples: 
+      ./nettoie < germinal_very_small | ./frequence.py | ./dessine_histogramme
+         ouvre une fenêtre où l'histogramme du fichier est affiché
+      ./nettoie <<< "Ceci est une phrase" | ./frequence.py | ./dessine_histogramme
+         ouvre une fenêtre où l'histogramme de la phrase est affiché
+EOF
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        "-h" ) cat $usage; rm -f $usage; exit 0;;
+        "-pdf") echo "Production de $FILE.pdf"
+                OUTPUT="set term pdf; set output '$FILE.pdf'"; shift;;
+        *) COMMANDE="$@"; shift $#;;
+    esac                
+done
+        
+if [[ -n "$COMMANDE" ]]; then 
+    data=`mktemp`
+    eval $COMMANDE > $data
+gnuplot -p <<EOF
+$OUTPUT
+set boxwidth 0.9 relative
+set style data histograms
+set style fill solid 1.0 border -1
+plot "$data" using 2:xticlabels(1)
+EOF
+rm $data
+else
+cat > script <<EOF
+set boxwidth 0.9 relative
+set style data histograms
+set style fill solid 1.0 border -1
+plot '/dev/stdin' using 2:xticlabels(1)
+EOF
+gnuplot -p script 
+fi
