@@ -37,6 +37,7 @@ Now, we have (d_i), we shift all c_i with d_i. All columns are encrypted with th
 
 ** Vigenere Cryptanalysis V3* : Pearson correlation coefficient
 Perf: 94 texts succesfully unciphered out of 100.
+
 Same method as V2, except mutual index of coin where we /use Pearson correlation coefficient.
 
 =Usage: python3 cryptanalyse_vigenere.py -v <1,2,3> -f <Filename>=
